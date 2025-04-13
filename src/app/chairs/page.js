@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 import ChairCard from "../components/ChairCard";
 
 export default function ListPage() {
-  const API = "http://localhost:39000/api";
+  const API = "http://165.232.79.109:39000/api";
   const token = Cookies.get("stsessionid");
 
   const [chairs, setChairs] = useState([]);

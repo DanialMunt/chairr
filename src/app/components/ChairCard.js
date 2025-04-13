@@ -12,7 +12,7 @@ export default function ChairCard({ chair, onDelete }) {
     if (!confirm('Are you sure you want to delete this chair?')) return;
 
     try {
-      const response = await fetch(`http://localhost:39000/api/chair/${id}/`, {
+      const response = await fetch(`http://165.232.79.109:39000/api/chair/${id}/`, {
         method: 'DELETE',
         headers: {
           Authorization: `Token ${token}`,

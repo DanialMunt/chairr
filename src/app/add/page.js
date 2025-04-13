@@ -41,7 +41,7 @@ export default function AddChair() {
     formData.append('specs', JSON.stringify(specsArray));
 
     try {
-      const response = await fetch('http://localhost:39000/api/chair/', {
+      const response = await fetch('http://165.232.79.109:39000/api/chair/', {
         method: 'POST',
         // Do not set the Content-Type header for multipart/form-data.
         headers: {

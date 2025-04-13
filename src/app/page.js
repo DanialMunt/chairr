@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link';
 export default function Home() {
 
-  const API = "http://localhost:39000/api"
+  const API = "http://165.232.79.109:39000/api"
 
   const [chairs, setChairs] = useState([])
 

@@ -82,7 +82,7 @@ export default function UpdateChair() {
     }
 
     try {
-      const response = await fetch(`http://localhost:39000/api/chair/${id}/`, {
+      const response = await fetch(`http://165.232.79.109:39000/api/chair/${id}/`, {
         method: 'PUT', // Use PATCH if you prefer partial updates
         headers: {
           // Let the browser set the Content-Type when sending multipart/form-data
