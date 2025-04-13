@@ -54,7 +54,7 @@ export default function AddChair() {
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Error details:", errorData);
-        throw new Error('Failed to create a new chair. Check the console for details.');
+        throw new Error("Error message for jins:", errorData);
       }
 
       const data = await response.json();
