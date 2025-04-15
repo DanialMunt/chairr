@@ -2,7 +2,7 @@
 
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
-
+import { API_URL } from '../../../config';
 export default function ChairCard({ chair, onDelete }) {
   const { id, title = 'Без названия', location = 'Неизвестно', thumbnail, description, specs } = chair;
   const token = Cookies.get('stsessionid');
@@ -12,7 +12,7 @@ export default function ChairCard({ chair, onDelete }) {
     if (!confirm('Are you sure you want to delete this chair?')) return;
 
     try {
-      const response = await fetch(`http://165.232.79.109:39000/api/chair/${id}/`, {
+      const response = await fetch(`${API_URL}/api/chair/${id}/`, {
         method: 'DELETE',
         headers: {
           Authorization: `Token ${token}`,
@@ -22,11 +22,11 @@ export default function ChairCard({ chair, onDelete }) {
       if (!response.ok) {
         throw new Error('Failed to delete the chair.');
       }
-      // If a parent callback is provided, call it to remove the deleted chair from state.
+
       if (onDelete) {
         onDelete(id);
       } else {
-        // Otherwise, refresh the page. In the Next.js app router, use router.refresh().
+    
         router.refresh();
         router.push('/');
       }
@@ -42,7 +42,7 @@ export default function ChairCard({ chair, onDelete }) {
         <img src={thumbnail} alt={title} className="w-full h-60 object-cover" />
       ) : (
         <div className="w-full h-60 bg-[#1B1E1F] flex items-center justify-center">
-          {/* Placeholder if no thumbnail */}
+       
         </div>
       )}
       <div className="p-4">
@@ -66,8 +66,8 @@ export default function ChairCard({ chair, onDelete }) {
             </div>
           ))}
         </div>
-        {/* Container for Update and Delete Buttons */}
-        <div className="absolute top-2 right-2 flex gap-2">
+      
+        {/* <div className="absolute top-2 right-2 flex gap-2">
           <button
             onClick={() => router.push(`/update/${id}`)}
             className="bg-green-600 hover:bg-green-700 text-white px-2 py-1 rounded text-xs"
@@ -80,7 +80,7 @@ export default function ChairCard({ chair, onDelete }) {
           >
             <img src="/material-symbols_delete-outline.png" alt="user" className="h-7" />
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

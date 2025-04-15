@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'
-import Cookies from 'js-cookie'; // Import js-cookie
-
+import Cookies from 'js-cookie'; 
+import { useAuth } from '../lib/AuthContext';
+import { API_URL } from '../../../config';
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -11,18 +12,20 @@ export default function SignIn() {
 
   const router = useRouter()
 
+  const { login } = useAuth();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError('');
 
     try {
-      const response = await fetch('http://165.232.79.109:39000/api/auth/login/', {
+      const response = await fetch(`${API_URL}/api/auth/login/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
-        credentials: 'include', // Ensure cookies are included
+        credentials: 'include',
       });
 
       if (!response.ok) {
@@ -30,14 +33,12 @@ export default function SignIn() {
       }
 
       const data = await response.json();
-      // Store token in a cookie
-      Cookies.set('stsessionid', data.token, { expires: 7, secure: false, sameSite: 'Strict' }); // 7 days expiry
 
-      console.log('Logged in successfully:', data);
+ 
+      login(data.token); 
 
-      // Optionally redirect after successful login
       router.push('/chairs');
-    
+
     } catch (error) {
       setError(error.message);
     }

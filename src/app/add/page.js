@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
+import { API_URL } from '../../../config';
 
 export default function AddChair() {
   const token = Cookies.get('stsessionid');
@@ -10,7 +11,7 @@ export default function AddChair() {
   const [description, setDescription] = useState('');
   const [thumbnail, setThumbnail] = useState(null);
   const [location, setLocation] = useState('');
-  const [specs, setSpecs] = useState(''); // User enters comma-separated values
+  const [specs, setSpecs] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
@@ -26,7 +27,7 @@ export default function AddChair() {
       return;
     }
 
-    // Prepare form data
+
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
@@ -35,15 +36,14 @@ export default function AddChair() {
     }
     formData.append('location', location);
 
-    // Process specs input: convert comma-separated string into an array,
-    // then send as a JSON string.
+  
     const specsArray = specs.split(',').map((item) => item.trim()).filter((item) => item);
     formData.append('specs', JSON.stringify(specsArray));
 
     try {
-      const response = await fetch('http://165.232.79.109:39000/api/chair/', {
+      const response = await fetch(`${API_URL}/api/chair/`, {
         method: 'POST',
-        // Do not set the Content-Type header for multipart/form-data.
+
         headers: {
           Authorization: `Token ${token}`,
         },
@@ -59,15 +59,14 @@ export default function AddChair() {
 
       const data = await response.json();
       setSuccess('Chair created successfully!');
-      // Reset form fields
+
       setTitle('');
       setDescription('');
       setThumbnail(null);
       setLocation('');
       setSpecs('');
       router.push('/chairs')
-      // Optionally, redirect to another page:
-      // router.push('/chairs');
+ 
     } catch (err) {
       setSuccess('');
       setError(err.message);
@@ -81,7 +80,7 @@ export default function AddChair() {
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
         {success && <p className="text-green-500 text-center mb-4">{success}</p>}
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Title */}
+
           <div>
             <label htmlFor="title" className="block text-sm font-medium text-white">
               Title
@@ -95,7 +94,7 @@ export default function AddChair() {
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             />
           </div>
-          {/* Description */}
+ 
           <div>
             <label htmlFor="description" className="block text-sm font-medium text-white">
               Description
@@ -109,7 +108,7 @@ export default function AddChair() {
               rows="3"
             />
           </div>
-          {/* Thumbnail */}
+       
           <div>
             <label htmlFor="thumbnail" className="block text-sm font-medium text-white">
               Thumbnail
@@ -123,7 +122,7 @@ export default function AddChair() {
               className="mt-1 block w-full text-sm text-gray-900 file:mr-2 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:bg-sky-600 file:text-white hover:file:bg-sky-700 cursor-pointer"
             />
           </div>
-          {/* Location */}
+
           <div>
             <label htmlFor="location" className="block text-sm font-medium text-white">
               Location
@@ -137,7 +136,7 @@ export default function AddChair() {
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             />
           </div>
-          {/* Specs */}
+  
           <div>
             <label htmlFor="specs" className="block text-sm font-medium text-white">
               Specs (Comma separated if multiple)
@@ -150,7 +149,7 @@ export default function AddChair() {
               rows="2"
             />
           </div>
-          {/* Submit Button */}
+
           <div>
             <button
               type="submit"

@@ -1,53 +1,37 @@
-// components/Header.jsx
-'use client';
 
+"use client"
+import { useAuth } from '../lib/AuthContext';
 import Link from 'next/link';
-import SearchBar from './searchBar';
-
-
 
 export default function Header() {
-  const handleSearch = (query) => {
-    // Implement your search logic here (e.g., update state or route to a search results page)
-    console.log('Searching for:', query);
-  };
+  const { isLoggedIn, logout } = useAuth();
 
   return (
-    <div className="flex justify-between items-center bg-[#2B2B2B] p-5 xl:px-50">
-      {/* Left: Logo and Title */}
+    <div className="flex justify-between items-center bg-[#2B2B2B] p-5">
       <Link href="/">
-      <div className="flex items-center gap-2">
-      
-        <img src="/logo.png" alt="logo" className="h-10" />
-        <span className="font-bold text-white">ChillChair</span>
-      </div>
-      </Link>
-      {/* Center: Tagline and Search Bar */}
-      <div className="flex flex-col items-center w-80">
-      <input
-              type="text"
-              id="title"
-              placeholder='Поиск'
-              required
-              className="mt-1 block w-full px-3 py-2 bg-[#1B1E1F] text-white rounded-md"
-            />
-        {/* <SearchBar onSearch={handleSearch}></SearchBar> */}
-
-        
-      </div>
-
-      {/* Right: Add Chair Button and Profile */}
-      <div className="flex items-center gap-4">
-        <Link href="/add">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition">
-           Добавить скамейку
-          </button>
-        </Link>
-        <div className="flex items-center gap-2 bg-[#1B1E1F] p-3 rounded-full cursor-pointer">
-          <span className='text-white'>Профиль</span>
-          <img src="/user.png" alt="user" className="h-7" />
+        <div className="flex items-center gap-2">
+          <img src="/logo.png" className="h-10" />
+          <span className="text-white font-bold">ChillChair</span>
         </div>
-      </div>
+      </Link>
+
+      {isLoggedIn ? (
+        <div className="flex gap-3 justify-between items-center">
+          <Link href="/add">
+            <button className="p-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 cursor-pointer">Добавить скамейку</button>
+          </Link>
+          <Link href="/chair/my">
+            <button className="p-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 cursor-pointer">Мои скамейки</button>
+          </Link>
+          <button onClick={logout} className="py-3 px-5 text-red-500 border border-b-red-500 rounded-md cursor-pointer hover:opacity-50">
+            Выйти
+          </button>
+        </div>
+      ) : (
+        <Link href="/login">
+          <button className="w-full p-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 cursor-pointer">Войти</button>
+        </Link>
+      )}
     </div>
   );
 }

@@ -3,18 +3,21 @@
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import ChairCard from "../components/ChairCard";
+import { useAuth } from '../lib/AuthContext';
+import { API_URL } from "../../../config";
+import Link from "next/link";
 
 export default function ListPage() {
-  const API = "http://165.232.79.109:39000/api";
+
   const token = Cookies.get("stsessionid");
 
   const [chairs, setChairs] = useState([]);
   const [error, setError] = useState("");
-  const [currentPageUrl, setCurrentPageUrl] = useState(`${API}/chair/?limit=8`);
+  const [currentPageUrl, setCurrentPageUrl] = useState(`${API_URL}/api/chair/?limit=8`);
   const [nextPage, setNextPage] = useState(null);
   const [prevPage, setPrevPage] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const { isLoggedIn } = useAuth();
   useEffect(() => {
     if (token) {
       fetchData(currentPageUrl);
@@ -43,9 +46,9 @@ export default function ListPage() {
 
       const data = await response.json();
       console.log(data);
-      setChairs(data.results);      // update the list of chairs
-      setNextPage(data.next);       // next page URL provided by the API
-      setPrevPage(data.previous);   // previous page URL provided by the API
+      setChairs(data.results);      
+      setNextPage(data.next);       
+      setPrevPage(data.previous); 
     } catch (error) {
       setError(error.message);
     } finally {
@@ -72,7 +75,7 @@ export default function ListPage() {
       {error && <p className="text-red-500">{error}</p>}
       <div className="py-2">
         {loading ? (
-          // Skeleton loaders: 8 blocks using animate-pulse
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 p-5">
             {Array.from({ length: 8 }, (_, index) => (
               <div key={index} className="animate-pulse">
@@ -83,8 +86,10 @@ export default function ListPage() {
           </div>
         ) : chairs.length > 0 ? (
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-            {chairs.map((chair) => (
+            {chairs.map((chair, key) => (
+              <Link key={chair.id} href={`/chair/${chair.id}`}>
               <ChairCard key={chair.id} chair={chair} />
+              </Link>
             ))}
           </div>
         ) : (
