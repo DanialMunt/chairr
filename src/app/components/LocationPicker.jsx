@@ -55,8 +55,9 @@ function LocationMarker({ onConfirm }) {
 
             try {
                 const response = await fetch(
-                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
+                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=ru`
                 );
+
                 const data = await response.json();
 
                 if (data && data.address) {
@@ -89,10 +90,10 @@ function LocationMarker({ onConfirm }) {
                         className="mt-2 px-2 py-1 bg-blue-500 text-white rounded text-xs hover:bg-blue-600"
                         onClick={() =>
                             onConfirm({
-                                coordinates: `${position.lat.toFixed(6)}, ${position.lng.toFixed(6)}`,
-                                address: address,
-                                road: position.road,
+                                lat: position.lat.toFixed(6),
+                                long: position.lng.toFixed(6),
                                 city: position.city,
+                                road: position.road,
                             })
                         }
                     >
@@ -108,13 +109,8 @@ export default function LocationPicker({ onLocationSelect }) {
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedCity, setSelectedCity] = useState(null);
 
-    const handleSelect = ({ coordinates, address, road, city }) => {
-        onLocationSelect({
-            location: coordinates,
-            address,
-            road,
-            city,
-        });
+    const handleSelect = ({ lat, long, city, road }) => {
+        onLocationSelect({ lat, long, city, road });
         setModalOpen(false);
     };
 

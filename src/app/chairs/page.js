@@ -77,7 +77,7 @@ export default function ListPage() {
   };
 
   const filteredChairs = selectedCity
-      ? chairs.filter(chair => chair.location?.includes(selectedCity))
+      ? chairs.filter(chair => chair.city?.includes(selectedCity))
       : chairs;
 
   return (

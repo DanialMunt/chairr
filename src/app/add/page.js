@@ -14,8 +14,10 @@ export default function AddChair() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [thumbnail, setThumbnail] = useState(null);
-  const [location, setLocation] = useState('');
-  const [address, setAddress] = useState('');
+  const [lat, setLat] = useState('');
+  const [long, setLong] = useState('');
+  const [city, setCity] = useState('');
+  const [road, setRoad] = useState('');
   const [specs, setSpecs] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -36,8 +38,10 @@ export default function AddChair() {
     if (thumbnail) {
       formData.append('thumbnail', thumbnail);
     }
-    formData.append('location', location);
-    formData.append('address', address);
+    formData.append('latitude', lat);
+    formData.append('longitude', long);
+    formData.append('city', city);
+    formData.append('road', road);
 
     const specsArray = specs.split(',').map((item) => item.trim()).filter((item) => item);
     formData.append('specs', JSON.stringify(specsArray));
@@ -64,8 +68,10 @@ export default function AddChair() {
       setTitle('');
       setDescription('');
       setThumbnail(null);
-      setLocation('');
-      setAddress('');
+      setLat('');
+      setLong('');
+      setCity('');
+      setRoad('');
       setSpecs('');
       router.push('/chairs');
 
@@ -121,55 +127,71 @@ export default function AddChair() {
 
             {/* Кнопка + появляющиеся поля */}
             <div className="flex flex-col gap-2">
-              {!location && !address && (
+              {!lat && !long && !city && !road && (
                   <LocationPicker
-                      onLocationSelect={({ location, address }) => {
-                        setLocation(location);
-                        setAddress(address);
+                      onLocationSelect={({ lat, long, city, road }) => {
+                        setLat(lat);
+                        setLong(long);
+                        setCity(city);
+                        setRoad(road);
                       }}
                   />
               )}
 
-              {(location && address) && (
+              {(lat && long && city && road) && (
                   <>
                     <div className="flex flex-col sm:flex-row gap-2">
-                      <div className="flex-1 block text-sm font-medium text-white">
-                        <label className="block text-sm font-medium text-white">Location</label>
+                      <div className="flex-1">
+                        <label className="block text-sm font-medium text-white">Latitude</label>
                         <input
                             type="text"
-                            name="location"
-                            value={location}
+                            value={lat}
                             readOnly
-                            placeholder="Координаты"
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
                         />
                       </div>
-
-                      <div className="flex-1 block text-sm font-medium text-white">
-                        <label className="block text-sm font-medium text-white">Address</label>
+                      <div className="flex-1">
+                        <label className="block text-sm font-medium text-white">Longitude</label>
                         <input
                             type="text"
-                            name="address"
-                            value={address}
+                            value={long}
                             readOnly
-                            placeholder="Адрес"
-                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <div className="flex-1">
+                        <label className="block text-sm font-medium text-white">City</label>
+                        <input
+                            type="text"
+                            value={city}
+                            readOnly
+                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <label className="block text-sm font-medium text-white">Road</label>
+                        <input
+                            type="text"
+                            value={road}
+                            readOnly
+                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
                         />
                       </div>
                     </div>
 
-                    <div>
-                      <LocationPicker
-                          onLocationSelect={({ location, address }) => {
-                            setLocation(location);
-                            setAddress(address);
-                          }}
-                      />
-                    </div>
+                    <LocationPicker
+                        onLocationSelect={({ lat, long, city, road }) => {
+                          setLat(lat);
+                          setLong(long);
+                          setCity(city);
+                          setRoad(road);
+                        }}
+                    />
                   </>
               )}
             </div>
-
 
             <div>
               <label htmlFor="specs" className="block text-sm font-medium text-white">Specs (Comma separated if multiple)</label>
