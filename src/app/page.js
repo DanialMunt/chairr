@@ -22,7 +22,7 @@ export default function Home() {
         <span className='text-gray-400 text=2xl'>
           Найдите самые интересные и комичные, смешные и забавные, оригинальные и просто веселые скамейки, чтобы повесилитсья отдуши!
         </span>
-        <Link href={isLoggedIn ? (`/chairs`) : ('/login')}>
+        <Link href={`/chairs`}>
           <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition cursor-pointer">
            Смотреть скамейки
           </button>

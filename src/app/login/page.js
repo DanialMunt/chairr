@@ -37,7 +37,7 @@ export default function SignIn() {
  
       login(data.token); 
 
-      router.push('/chairs');
+      router.push('/');
 
     } catch (error) {
       setError(error.message);

@@ -13,18 +13,18 @@ export default function ListPage() {
 
   const [chairs, setChairs] = useState([]);
   const [error, setError] = useState("");
-  const [currentPageUrl, setCurrentPageUrl] = useState(`${API_URL}/api/chair/?limit=8`);
+  const [currentPageUrl, setCurrentPageUrl] = useState(`${API_URL}/api/chair/?status=published&limit=8`);
   const [nextPage, setNextPage] = useState(null);
   const [prevPage, setPrevPage] = useState(null);
   const [loading, setLoading] = useState(false);
   const { isLoggedIn } = useAuth();
   useEffect(() => {
-    if (token) {
+    // if (token) {
       fetchData(currentPageUrl);
-      console.log("The cookie", token);
-    } else {
-      setError("User not authenticated. Please log in.");
-    }
+    //   console.log("The cookie", token);
+    // } else {
+    //   setError("User not authenticated. Please log in.");
+    // }
   }, [token, currentPageUrl]);
 
   const fetchData = async (url) => {
@@ -35,7 +35,7 @@ export default function ListPage() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Token ${token}`
+          // "Authorization": `Token ${token}`
         },
         credentials: "include",
       });

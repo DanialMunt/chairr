@@ -16,13 +16,13 @@ export default function SinglePage() {
     const router = useRouter();
 
     useEffect(() => {
-        if (token) {
+        // if (token) {
             fetchData();
             fetchComments(id)
-            console.log("The cookie", token);
-        } else {
-            console.log("User not authenticated. Please log in.");
-        }
+        //     console.log("The cookie", token);
+        // } else {
+        //     console.log("User not authenticated. Please log in.");
+        // }
     }, [token]);
 
    
@@ -95,7 +95,7 @@ export default function SinglePage() {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Token ${token}`
+                    // "Authorization": `Token ${token}`
                 },
                 credentials: "include",
             });

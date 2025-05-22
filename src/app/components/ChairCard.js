@@ -56,6 +56,8 @@ export default function ChairCard({ chair, onDelete }) {
           <img src="/proicons_location.png" alt="user" className="h-7" />
           <p className="text-sm text-[#A6A199] mb-1"> {location}</p>
         </div>
+        
+
 
 
 
