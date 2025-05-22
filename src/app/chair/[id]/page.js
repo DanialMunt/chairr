@@ -16,7 +16,7 @@ export default function SinglePage() {
     const router = useRouter();
 
     useEffect(() => {
-        // if (token) {
+        if (token) {
             fetchData();
             fetchComments(id);
         }
@@ -137,7 +137,7 @@ export default function SinglePage() {
                                 value={message}
                                 onChange={(e) => setMessage(e.target.value)}
                                 required
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-black"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-white"
                             />
                             <button
                                 type="submit"
