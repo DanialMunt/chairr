@@ -2,19 +2,21 @@
 
 import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
-import ChairCard from '../components/ChairCard';      // ← adjust as needed
-import { API_URL } from "../../../config";            // ← adjust as needed
+import ChairCard from '../components/ChairCard';
+import { API_URL } from "../../../config";
 import { useAuth } from '../lib/AuthContext';
+import { Router, useRouter } from 'next/navigation';
+
 export default function ModeratorPage() {
   const token = Cookies.get('stsessionid');
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-const { user } = useAuth();
-
-useEffect(() => {
+  const { user } = useAuth();
+  const router = useRouter()
+  useEffect(() => {
     if (!loading) {
-      
+
       if (!user || !user.groups.includes('moderator')) {
         router.replace('/list');
       }
@@ -37,7 +39,7 @@ useEffect(() => {
     setLoading(true);
     setError('');
     try {
-   
+
       const url = `${API_URL}/api/chair/?status=draft&limit=20`;
 
       const res = await fetch(url, {
@@ -51,7 +53,7 @@ useEffect(() => {
       if (!res.ok) throw new Error('Failed to load applications.');
 
       const data = await res.json();
-     
+
       setApplications(data.results);
     } catch (err) {
       setError(err.message);
@@ -102,7 +104,7 @@ useEffect(() => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {applications.map((chair) => (
             <div key={chair.id} className="flex flex-col">
-            
+
               <ChairCard chair={chair} />
 
               <div className="mt-3 flex justify-between">

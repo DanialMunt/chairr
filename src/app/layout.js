@@ -1,29 +1,20 @@
-'use client';
-import Header from "./components/Header";
-import "./globals.css";
-import { AuthProvider } from "./lib/AuthContext";
-
-
+'use client'
+import './globals.css'
+import { AuthProvider } from './lib/AuthContext'
+import Header from './components/Header'
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-
-
-
-      <body className="flex flex-col items-center">
-      <AuthProvider>
-        <header className="w-full">
-          <Header></Header>
-        </header>
-
-        <main className="w-full px-10 xl:px-50">
-    
+     <html lang="en">
+      <body className="flex flex-col min-h-screen bg-[#1F1F1F]">
+        <AuthProvider>
+        <header><Header /></header>
+        <main className="flex-1 px-4 xl:px-10">
           {children}
-         
         </main>
         </AuthProvider>
       </body>
-
     </html>
-  );
+  )
 }
+
+
