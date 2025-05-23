@@ -9,11 +9,11 @@ export default function Home() {
   const router = useRouter();
   const { user, loading } = useAuth(); 
 
-  useEffect(() => {
-    if (!loading && user?.groups.includes('moderator')) {
-      router.replace('/applications'); 
-    }
-  }, [user, loading, router]);
+  // useEffect(() => {
+  //   if (!loading && user?.groups.includes('moderator')) {
+  //     router.replace('/applications'); 
+  //   }
+  // }, [user, loading, router]);
 
   return (
     <div className="flex flex-col md:flex-row items-center justify-center p-6">

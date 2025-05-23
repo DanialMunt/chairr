@@ -19,6 +19,8 @@ export default function SinglePage() {
         if (token) {
             fetchData();
             fetchComments(id);
+        } else {
+            router.push('/login')
         }
     }, [token]);
 

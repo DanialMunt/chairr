@@ -33,6 +33,7 @@ export default function SignIn() {
       }
 
       const data = await response.json();
+      console.log(data)
 
  
       login(data.token); 
